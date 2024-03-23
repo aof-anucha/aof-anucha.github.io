@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Layout</title>
+    <style>
+        /* กำหนดสไตล์ของเลย์เอาต์ */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            /* แบ่งเป็น 2 คอลัมน์ */
+            gap: 20px;
+            /* ระยะห่างระหว่างกล่อง */
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .left-box,
+        .right-box {
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .content {
+            background-color: #f2f2f2;
+            padding: 20px;
+            min-height: 500px;
+            /* ความสูงขั้นต่ำของส่วนเนื้อหา */
+        }
+
+        li {
+            color: #ff0000;
+        }
+
+        td {
+            padding: 0 10px;
+        }
+
+        button {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>รายการหนังสือ</h1>
+    </header>
+
+    <div class="container2">
+        <div class="content">
+            <h2>Content Area</h2>
+            <p>This is the content of the website.</p>
+            <table>
+                <tbody id="book2">
+                </tbody>
+            </table>
+            <button onclick="addBook()">เพิ่มหนังสือ</button>
+        </div>
+        <div class="content">
+            <h2>Content Area</h2>
+            <ul id="books"></ul>
+            <button onclick="addBook()">เพิ่มหนังสือ</button>
+            <button onclick="deletebook(0)">ดูข้อมูลหนังสือ</button>
+            <button>แก้ไข้ข้อมูลหนังสือ</button>
+            <button>ลบหนังสือ</button>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Footer &copy; 2024</p>
+    </footer>
+    <script>
+
+        let x = 0
+        let books = [
+            { title: "Book1", author: "Author1", year: 2021, price: 500 },
+            { title: "Book2", author: "Author2", year: 2022, price: 600 },
+            { title: "Book3", author: "Author2", year: 2022, price: 600 },
+        ];
+
+        add_book_table(books)
+
+
+        let bookList = document.getElementById("books");
+        books.forEach(function (book) {
+            let listItem = document.createElement("li"); // สร้างอิลิเมนต์ <li>
+            listItem.textContent = book.title; // กำหนดข้อความในอิลิเมนต์
+            bookList.appendChild(listItem); // เพิ่มอิลิเมนต์ลงใน <ul>
+        });
+
+        function load_book_table() {
+            add_book_table(books)
+        }
+        function add_book_table(booklists) {
+            booklists.forEach(function (book) {
+                let bookList3 = document.getElementById("book2");
+                let listItem2 = document.createElement("tr");
+                let listItem4 = document.createElement("td");
+                // let listItem5 = document.createElement("td");
+                let Viewbutton = document.createElement("button");
+                let Editbutton = document.createElement("button");
+                let Deletebutton = document.createElement("button");
+
+                Viewbutton.textContent = "ดูข้อมูลหนังสือ";
+                Viewbutton.id = `vbt ${x += 1}`; //เพิ่มค่า x รอบนึง
+                Editbutton.textContent = "แก้ไข้ข้อมูลหนังสือ";
+                Editbutton.id = `ebt ${x}`;
+                Deletebutton.textContent = "ลบหนังสือ";
+                Deletebutton.id = `dbt ${x}`;
+
+                Deletebutton.onclick = function () {
+                    deleteBook(Deletebutton.id); // ส่งอาร์กิวเมนต์ไปยัง testprint
+                    // testprint(Deletebutton.id);
+
+                };
+
+                Editbutton.onclick = function () {
+                    editBook(Editbutton.id);
+                };
+                // Deletebutton.onclick = function() {
+                //     // ใส่โค้ดที่ต้องการให้ทำงานเมื่อปุ่มถูกคลิก
+                //     console.log("Delete button clicked!");
+                // };
+
+                listItem4.textContent = book.title
+                listItem2.appendChild(listItem4)
+                listItem2.appendChild(Viewbutton)
+                listItem2.appendChild(Editbutton)
+                listItem2.appendChild(Deletebutton)
+                bookList3.appendChild(listItem2)
+            });
+
+
+        }
+
+        function addrow() {
+            let bookList3 = document.getElementById("book2");
+            let listItem2 = document.createElement("tr");
+            let listItem4 = document.createElement("td");
+            let listItem5 = document.createElement("td");
+            let button = document.createElement("button");
+            button.textContent = "ดูข้อมูลหนังสือ";
+            button.id = `bt ${x += 1}`;
+            listItem4.textContent = books[0].title
+            listItem5.textContent = 1668
+            listItem2.appendChild(listItem4)
+            listItem2.appendChild(button)
+            bookList3.appendChild(listItem2)
+            console.log(typeof `bt ${x}`);
+        }
+
+        function addBook() {
+            let bookTitle = prompt("Enter the title of the book:");
+            let bookauthor = prompt("Enter the author of the book:");
+            let bookyear = prompt("Enter year of publication of the book:");
+            let bookprice = prompt("Enter price of the book:");
+            alert(`-the title of the book: ${bookTitle}\n-the author of the book: ${bookauthor}\n-year of publication of the book: ${bookyear}\n-price of the book: ${bookprice}`);
+            let new_book = [{ title: bookTitle, author: bookauthor, year: bookyear, price: bookprice }];
+            books.push(new_book[0]);
+            let listItem = document.createElement("li"); // สร้างอิลิเมนต์ <li>
+            listItem.textContent = new_book.title; // กำหนดข้อความในอิลิเมนต์
+            bookList.appendChild(listItem); // เพิ่มอิลิเมนต์ลงใน <ul>
+
+            add_book_table(new_book)
+
+            books.forEach(function (book, index) {
+                console.log(index, book);
+            });
+            // code to add book
+        }
+
+        function testprint(x) {
+            // var tbody = document.getElementById("book2");
+
+            // // เลือกทุก <tr> ภายใน tbody
+            // var trList = tbody.querySelectorAll("tr");
+            // console.log(trList[0])
+
+            // เลือก tbody ที่มี id เท่ากับ "book2"
+            var tbody = document.getElementById("book2");
+
+            // เลือกทุก <tr> ภายใน tbody
+            var trList = tbody.querySelectorAll("tr");
+
+            // ลูปผ่านทุก <tr> ในลิสต์
+            trList.forEach(function (tr, index) {
+                // ดึงค่าดัชนีของ <tr> ที่กำลังตรวจสอบออกมา
+                var trIndex = Array.from(tr.parentNode.children).indexOf(tr);
+                console.log("Index of <tr>: " + trIndex);
+            });
+        }
+
+        function deleteBook(x) {
+            var tbody = document.getElementById("book2");
+
+            var trWithButton = tbody.querySelector(`tr:has(button[id='${x}'])`);
+            let z = Array.from(trWithButton.parentNode.children).indexOf(trWithButton);
+            // let z = Array.from(trWithButton.parentNode.children)
+            // let y = trWithButton.querySelector('td')
+            // y.textContent="edited"
+
+            console.log(z);
+            trWithButton.remove();
+
+            // books.splice(z, 1);
+
+            // var trToRemove = document.querySelector(`#book2 tr:nth-child(${1})`)
+            // trToRemove.remove();
+
+            books.forEach(function (book, index) {
+                console.log(index, book);
+            });
+        }
+
+        function editBook(x) {
+            var tbody = document.getElementById("book2");
+            var trWithButton = tbody.querySelector(`tr:has(button[id='${x}'])`);
+            let z = Array.from(trWithButton.parentNode.children).indexOf(trWithButton);
+
+
+            let bookTitle = prompt("Enter the title of the book:");
+            let bookauthor = prompt("Enter the author of the book:");
+            let bookyear = prompt("Enter year of publication of the book:");
+            let bookprice = prompt("Enter price of the book:");
+            alert(`-the title of the book: ${bookTitle}\n-the author of the book: ${bookauthor}\n-year of publication of the book: ${bookyear}\n-price of the book: ${bookprice}`);
+            let edit_book = [{ title: bookTitle, author: bookauthor, year: bookyear, price: bookprice }];
+
+            let y = trWithButton.querySelector('td')
+            y.textContent= edit_book[0].title
+            
+
+            books.splice(z, 1 ,edit_book[0]);
+            books.forEach(function (book, index) {
+                console.log(index, book);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
