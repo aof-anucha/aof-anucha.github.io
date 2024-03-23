@@ -113,13 +113,22 @@
         .addbt {
             background-color: rgb(98, 190, 95);
             padding: 8px;
-            border-radius: 10px;
+            border-radius: 20px;
+            width: 40px;
+            color: #fff;
+            font-size: 20px;
         }
         .addbt:hover {
             background-color: rgb(38, 190, 33);
             padding: 8px;
-            border-radius: 10px;
+            border-radius: 20px;
+            width: 40px;
         }
+        .header-grid {
+            display: flex;
+            align-items: center;
+        }
+
 
     </style>
 </head>
@@ -132,12 +141,14 @@
 
     <div class="container2">
         <div class="content">
-            <h2>ALL BOOKS</h2>
+            <div class="header-grid">
+                <h2>ALL BOOKS</h2>
+                <button id="addbook" class="addbt" onclick="addBook()">+</button>
+            </div>
             <table>
                 <tbody id="book2">
                 </tbody>
             </table>
-            <button id="addbook" class="addbt" onclick="addBook()">เพิ่มหนังสือ</button>
         </div>
         <div class="content">
             <h2>BOOK DETAILS</h2>
